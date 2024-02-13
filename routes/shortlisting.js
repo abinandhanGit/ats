@@ -30,6 +30,7 @@ router.get('/companyNames/:designation', async (req, res) => {
     attributes: ['company_name'],
     where: {
       position_tobe_filled: [req.params.designation],
+      order: ['id', 'DESC'],
       status: ['Open']
     },
   });
@@ -55,6 +56,7 @@ router.get('/statusCandidates/:status', async (req, res) => {
   const result = await CandidateinfoTable.findAll({
     where: {
       status: [status],
+      order: ['id', 'DESC'],
     },
   });
 
@@ -310,6 +312,7 @@ router.post('/technology', async (req, res) => {
 
     const result = await CandidateinfoTable.findAll({
       where: whereClause,
+      order: ['id', 'DESC'],
     });
 
     res.send(result);
@@ -376,6 +379,7 @@ router.post('/shortlistedSearch', async (req, res) => {
 
     const result = await CandidateinfoTable.findAll({
       where: whereClause,
+      order: ['id', 'DESC'],
     });
 
     res.send(result);

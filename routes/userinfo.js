@@ -5,9 +5,13 @@ import { Sequelize } from 'sequelize';
 import sequelize from '../models/sequelizeConfig.js';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { spawn } from 'child_process';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 const router = express.Router();
-
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 // sequelize.sync();
 
 async function hashPassword(plaintextPassword) {
@@ -133,5 +137,28 @@ router.post('/login', async (req, res)=>{
   }
 
 });
+
+router.get('/chat/:query', async (req, res) => {
+
+  try {
+    const python = spawn('python', ['routes/main.py', req.params.query]);
+
+    python.stdout.on('data', (data) => {
+      const output = data.toString();
+      console.log('result  : ', output);
+      res.send(output)
+    });
+
+    python.on('close', (code) => {
+      console.log(`closed with code : ${code}`);
+    });
+
+  } catch (err) {
+    console.log("Error fetching : ", err);
+    res.status(500).send("Internal Server Error");
+  }
+
+});
+
 
 export default router;

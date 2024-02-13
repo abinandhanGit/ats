@@ -46,7 +46,7 @@ router.post('/sort', async (req, res)=>{
   try {
 
     const result = await ChecklistTable.findAll({
-      order: [[orderBy || 'id', order || 'ASC']], // Default order by 'id' in ascending order if not provided
+      order: [[orderBy || 'id', order || 'DESC']], // Default order by 'id' in ascending order if not provided
     });
 
     res.send(result);
