@@ -193,23 +193,23 @@ router.post('/forgotPassword', async (req, res) => {
   }
 });
 
-router.get('/chat/:query', async (req, res) => {
-  try {
-    const python = spawn('python', ['routes/main.py', req.params.query]);
+// router.get('/chat/:query', async (req, res) => {
+//   try {
+//     const python = spawn('python', ['routes/main.py', req.params.query]);
 
-    python.stdout.on('data', (data) => {
-      const output = data.toString();
-      console.log('result  : ', output);
-      res.send(output);
-    });
+//     python.stdout.on('data', (data) => {
+//       const output = data.toString();
+//       console.log('result  : ', output);
+//       res.send(output);
+//     });
 
-    python.on('close', (code) => {
-      console.log(`closed with code : ${code}`);
-    });
-  } catch (err) {
-    console.log('Error fetching : ', err);
-    res.status(500).send('Internal Server Error');
-  }
-});
+//     python.on('close', (code) => {
+//       console.log(`closed with code : ${code}`);
+//     });
+//   } catch (err) {
+//     console.log('Error fetching : ', err);
+//     res.status(500).send('Internal Server Error');
+//   }
+// });
 
 export default router;
