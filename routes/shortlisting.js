@@ -30,9 +30,10 @@ router.get('/companyNames/:designation', async (req, res) => {
     attributes: ['company_name'],
     where: {
       position_tobe_filled: [req.params.designation],
-      order: ['id', 'DESC'],
       status: ['Open']
     },
+    order: [['id', 'DESC']],
+
   });
   res.send(result);
 });
@@ -56,8 +57,8 @@ router.get('/statusCandidates/:status', async (req, res) => {
   const result = await CandidateinfoTable.findAll({
     where: {
       status: [status],
-      order: ['id', 'DESC'],
     },
+    order: [['id', 'DESC']],
   });
 
   res.send(result);
@@ -312,7 +313,7 @@ router.post('/technology', async (req, res) => {
 
     const result = await CandidateinfoTable.findAll({
       where: whereClause,
-      order: ['id', 'DESC'],
+      order: [['id', 'DESC']],
     });
 
     res.send(result);
@@ -379,7 +380,7 @@ router.post('/shortlistedSearch', async (req, res) => {
 
     const result = await CandidateinfoTable.findAll({
       where: whereClause,
-      order: ['id', 'DESC'],
+      order: [['id', 'DESC']],
     });
 
     res.send(result);
@@ -393,6 +394,11 @@ router.post('/sendmail', async (req, res) => {
   // initialize nodemailer
 
   const {receiver_mailids, feedback, candidate_name, newStatus, designation, company_name} = req.body;
+  const curYear = new Date().getFullYear();
+  let template='email';
+  if(newStatus==='Selected'){
+    template = 'select';
+  }
 
   var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -411,35 +417,15 @@ router.post('/sendmail', async (req, res) => {
     viewPath: path.resolve('./views/'),
   };
 
-  // use a template file with nodemailer
   transporter.use('compile', hbs(handlebarOptions));
 
-  // for (const user of users) {
-  //   if (user.email) {
-  //     const mailOptions = {
-  //       from: '"My Company" <my@company.com>', // sender address
-  //       template: 'email', // the name of the template file, i.e., email.handlebars
-  //       to: user.email,
-  //       subject: `Welcome to My Company, ${user.name}`,
-  //       context: {
-  //         name: user.name,
-  //         company: 'my company',
-  //       },
-  //     };
-  //     try {
-  //       await transporter.sendMail(mailOptions);
-  //     } catch (error) {
-  //       console.log(`Nodemailer error sending email to ${user.email}`, error);
-  //     }
-  //   }
-  // }
-
   const context = {
-    name: candidate_name, // Change this to the actual recipient's name
-    company: company_name, // Change this to the actual company name
+    name: candidate_name,
+    company: company_name,
     feedback: feedback,
     designation:designation,
-    newStatus:newStatus
+    newStatus:newStatus,
+    year:curYear
   };
 
   var mailOptions = {
@@ -447,7 +433,7 @@ router.post('/sendmail', async (req, res) => {
     to: receiver_mailids,
     subject: 'Update from ATS',
     text: '',
-    template: 'email',
+    template: template,
     context: context
   };
   
@@ -467,6 +453,7 @@ router.post('/sendRejectmail', async (req, res) => {
   // initialize nodemailer
 
   const {receiver_mailids, feedback, candidate_name, newStatus, designation, company_name} = req.body;
+  const curYear = new Date().getFullYear();
 
   var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -493,7 +480,8 @@ router.post('/sendRejectmail', async (req, res) => {
     company: company_name,
     feedback: feedback,
     designation:designation,
-    newStatus:newStatus
+    newStatus:newStatus,
+    year:curYear
   };
 
   var mailOptions = {
