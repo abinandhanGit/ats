@@ -12,8 +12,21 @@ const router = express.Router();
 router.get('/all', async(req, res)=>{
   try{
     const result = await ChecklistTable.findAll({
-      order: [['id', 'ASC']],
+      order: [['id', 'DESC']],
       where: {status: "Open"}
+    });
+    // console.log(result);
+    const items = result.rows;
+    res.send(result);
+  }catch(err){
+    console.log("Error fetching : ", err);
+  }
+});
+
+router.get('/allDownload', async(req, res)=>{
+  try{
+    const result = await ChecklistTable.findAll({
+      order: [['id', 'DESC']]
     });
     // console.log(result);
     const items = result.rows;

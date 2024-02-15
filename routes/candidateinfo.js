@@ -34,7 +34,7 @@ router.get('/all', async (req, res) => {
     const result = await CandidateinfoTable.findAll({
       order: [['id', 'DESC']],
     });
-    console.log("all  :", result);
+    // console.log("all  :", result);
     res.send(result);
   } catch (err) {
     console.log('Error fetching : ', err);
@@ -195,6 +195,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/insert', async (req, res) => {
+  
   const {
     candidate_name,
     education,
@@ -296,13 +297,13 @@ router.post('/insert', async (req, res) => {
         console.log(error);
         res.send(error);
       } else {
-        console.log('Email sent: ' + info.response);
-        res.send(info.response);
+         res.send(info.response);
       }
     });
   } catch (error) {
     console.log('error inserting elements:', error);
   }
+
 });
 
 //body should be of format [{},{},{}]
