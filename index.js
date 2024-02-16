@@ -7,6 +7,7 @@ import sequelize from './models/sequelizeConfig.js';
 import path from 'path';
 const __dirname = path.resolve();
 import exphbs from "express-handlebars"
+import UserinfoTable from './models/userinfoTable.js';
 
 dotenv.config();
 
@@ -38,7 +39,24 @@ app.engine('.hbs', exphbs.engine({ extname: '.hbs', defaultLayout: "main"}));
 app.set("view engine", "handlebars");
 app.use(express.static("images"));
 
-sequelize.sync({alter: true});
+sequelize.sync({ alter: true }).then(async () => {
+  // Check if the User table is empty
+  const usersCount = await UserinfoTable.count();
+
+  if (usersCount === 0) {
+    // Add a row to the User table if it's empty
+    await UserinfoTable.create({
+      // Define the properties for the new user
+      // You might need to adjust this based on your User model
+      username: 'admin@root.com',
+      password: 'qwertyuiop',
+      // Add other properties as needed
+    });
+
+    console.log('Default user added to the User table.');
+    
+  }
+});
 
 app.use('/api', router);
 
