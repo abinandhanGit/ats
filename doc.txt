@@ -1,0 +1,106 @@
+
+MANPOWER REQUIREMENT 
+
+    Tablename : checklisttable
+
+    To fetch data - GET
+
+        Fetch all rows                                              /api/checklist/all
+        Fetch by lazyload (page, pagesize passed in query)          /api/checklist
+        Fetch specific row by id                                    /api/checklist/:id
+
+    To insert - POST
+
+        Fetch by lazyload (page, pagesize passed in body)           /api/checklist
+        Insert data (pass data in body)                             /api/checklist/insert
+
+    To edit - PUT
+
+        Update data (pass id and new data in body)                  /api/checklist/edit
+
+    To delete - DELETE
+
+        Delete row (pass id in body)                                /api/checklist/delete
+
+    Table attributes :
+
+        id                          integer NOT NULL DEFAULT nextval('checklisttable_id_seq'::regclass),
+        company_name                character varying(255) COLLATE pg_catalog."default" NOT NULL,
+        contact_person_name         character varying(255) COLLATE pg_catalog."default" NOT NULL,
+        email_id                    character varying(255) COLLATE pg_catalog."default" NOT NULL,
+        date_of_request             date,
+        requester_name              character varying(255) COLLATE pg_catalog."default",
+        requester_designation       character varying(100) COLLATE pg_catalog."default",
+        position_tobe_filled        character varying(100) COLLATE pg_catalog."default",
+        onboarding_days             integer,
+        job_description             text COLLATE pg_catalog."default",
+        reason_for_hiring           character varying(50) COLLATE pg_catalog."default",
+        qualification               character varying(100) COLLATE pg_catalog."default",
+        experience                  character varying(50) COLLATE pg_catalog."default",
+        position_type               character varying(50) COLLATE pg_catalog."default",
+        location                    character varying(100) COLLATE pg_catalog."default",
+        no_of_openings              integer,
+        initial_approval            character varying(100) COLLATE pg_catalog."default",
+        final_approval              character varying(100) COLLATE pg_catalog."default",
+        profile_sourcing            character varying(100) COLLATE pg_catalog."default",
+        ctc_range                   character varying(50) COLLATE pg_catalog."default",
+        budget                      character varying(100) COLLATE pg_catalog."default",
+        mobile_number               character varying(50) COLLATE pg_catalog."default",
+        CONSTRAINT checklisttable_pkey PRIMARY KEY (id)
+
+
+
+
+
+
+
+CANDIDATE INFO 
+
+    Tablename : candidateinfotable
+
+    To fetch data - GET
+
+        Fetch all rows                                              /api/candidateinfo/all
+        Fetch specific row by id                                    /api/candidateinfo/:id
+
+    To insert - POST
+
+        Fetch by lazyload (page, pagesize passed in body)           /api/candidateinfo
+        Insert data (pass data in body)                             /api/candidateinfo/insert
+
+    To edit - PUT
+
+        Update data (pass id and new data in body)                  /api/candidateinfo/edit/:id
+    
+    To delete - DELETE
+
+        Delete row (pass id in body)                                /api/candidateinfo/delete
+
+    Table attributes : 
+
+        id                      integer NOT NULL DEFAULT nextval('candidateinfotable_id_seq'::regclass),
+        candidate_name          character varying(100) COLLATE pg_catalog."default",
+        education               character varying(200) COLLATE pg_catalog."default",
+        technology              character varying(100) COLLATE pg_catalog."default",
+        mobile_number           character varying(50) COLLATE pg_catalog."default",
+        email_id                character varying(100) COLLATE pg_catalog."default",
+        resume                  text COLLATE pg_catalog."default",
+        home_town               character varying(100) COLLATE pg_catalog."default",
+        current_location        character varying(100) COLLATE pg_catalog."default",
+        preffered_location      character varying(100) COLLATE pg_catalog."default",
+        prev_employment         character varying(200) COLLATE pg_catalog."default",
+        designation             character varying(100) COLLATE pg_catalog."default",
+        qualification           character varying(200) COLLATE pg_catalog."default",
+        experience              character varying(50) COLLATE pg_catalog."default",
+        relevant_experience     character varying(200) COLLATE pg_catalog."default",
+        course_completion       text COLLATE pg_catalog."default",
+        skill_set               text COLLATE pg_catalog."default",
+        current_takehome        character varying(100) COLLATE pg_catalog."default",
+        expectation             character varying(100) COLLATE pg_catalog."default",
+        notice_duration         character varying(50) COLLATE pg_catalog."default",
+        reason_relieving        text COLLATE pg_catalog."default",
+        having_offers           character varying(10) COLLATE pg_catalog."default",
+        CONSTRAINT candidateinfotable_pkey PRIMARY KEY (id)
+
+
+        current_employment
