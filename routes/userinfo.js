@@ -1,5 +1,4 @@
 import express from 'express';
-import db from '../models/index.js';
 import UserinfoTable from '../models/userinfoTable.js';
 import { Sequelize } from 'sequelize';
 import sequelize from '../models/sequelizeConfig.js';
