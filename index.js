@@ -39,25 +39,7 @@ app.engine('.hbs', exphbs.engine({ extname: '.hbs', defaultLayout: "main"}));
 app.set("view engine", "handlebars");
 app.use(express.static("images"));
 
-sequelize.sync({ alter: true }).then(async () => {
-  // Check if the User table is empty
-  const usersCount = await UserinfoTable.count();
-  console.log('Defau.');
-
-  if (usersCount === 0) {
-    // Add a row to the User table if it's empty
-    await UserinfoTable.create({
-      // Define the properties for the new user
-      // You might need to adjust this based on your User model
-      emailid: 'w',
-      password: 'w',
-      // Add other properties as needed
-    });
-
-    console.log('Default user added to the User table.');
-
-  }
-});
+sequelize.sync({ alter: true });
 
 app.use('/api', router);
 
