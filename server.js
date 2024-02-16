@@ -15,7 +15,7 @@ const app = express();
 // const { API_PORT } = process.env;
 // const port = process.env.PORT || API_PORT;
 
-const port = process.env.API_PORT;
+const port = process.env.PORT || 3001;
 
 const corsOptions = {
   allowedHeaders: ['ngrok-skip-browser-warning', 'Content-Type'],
