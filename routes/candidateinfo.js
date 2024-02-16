@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-// import CandidateinfoTable from '../models/CandidateinfoTable.js';
+import CandidateinfoTable from '../models/CandidateinfoTable.js';
 import { Sequelize } from 'sequelize';
 import sequelize from '../models/sequelizeConfig.js';
 import reader from 'xlsx';
@@ -13,7 +13,6 @@ import hbs from 'nodemailer-express-handlebars';
 import nodemailer from 'nodemailer';
 
 const __dirname = path.resolve();
-import CandidateinfoTable from `${__dirname}/models/CandidateinfoTable.js`;
 
 const router = express.Router();
 
@@ -369,7 +368,6 @@ router.post('/fromxl', async (req, res) => {
   } catch (error) {
     console.log('error inserting elements:', error);
   }
-  
 });
 
 router.post('/upload', async (req, res, next) => {
